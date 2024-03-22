@@ -5,11 +5,10 @@
     shell: "/usr/bin/zsh"
 
 - name: Create zsh Cache Directory
-  become: true
-  become_user: "{{ main_user }}"
   ansible.builtin.file:
-    path: "/home/{{ main_user }}/.cache/zsh"
     state: directory
+    path: "/home/{{ main_user }}/.cache/zsh"
+    owner: "{{ main_user }}"
     mode: "755"
 
 - name: Set Doas File Content
