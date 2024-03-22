@@ -1,0 +1,23 @@
+---
+- name: Pacstrap Packages
+  ansible.builtin.command:
+    cmd: >
+      pacstrap -K {{ fsroot }} --needed
+      {% for pkg in base_packages %}
+        {{ pkg | quote }}
+      {% endfor %}
+
+- name: Install UEFI-Specific Packages
+  when: boot_mode == "uefi"
+  ansible.builtin.command:
+    cmd: >
+      arch-chroot {{ fsroot }} pacman -Sy --noconfirm --needed
+      efibootmgr
+
+- name: Install Btrfs-Specific Packages
+  when: filesystem == "btrfs"
+  ansible.builtin.command:
+    cmd: >
+      arch-chroot {{ fsroot }} pacman -Sy --noconfirm --needed
+      btrfs-progs
+      snapper

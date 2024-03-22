@@ -1,0 +1,8 @@
+---
+apps:
+  - "org.telegram.desktop"
+  - "org.mozilla.Thunderbird"
+  - "com.github.GradienceTeam.Gradience"
+  - "com.github.wwmm.easyeffects"
+  - "com.github.tchx84.Flatseal"
+  - "dev.vencord.Vesktop"

@@ -1,0 +1,21 @@
+---
+- name: Copy Snapper Config
+  ansible.builtin.template:
+    src: "snapper-root.j2"
+    dest: "/etc/snapper/configs/root"
+    mode: "640"
+
+- name: Register Config in Snapper
+  ansible.builtin.lineinfile:
+    path: "/etc/conf.d/snapper"
+    regexp: "^SNAPPER_CONFIGS"
+    line: 'SNAPPER_CONFIGS="root"'
+
+- name: Enable Snapper Systemd Timers
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - "snapper-cleanup.timer"
+    - "snapper-timeline.timer"

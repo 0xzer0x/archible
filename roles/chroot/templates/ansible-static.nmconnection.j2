@@ -1,0 +1,11 @@
+[connection]
+id=ansible-static
+type=ethernet
+autoconnect=true
+autoconnect-priority=100
+
+[ipv4]
+method=manual
+addresses={{ ansible_host }}/{{ ansible_default_ipv4["prefix"] }}
+gateway={{ ansible_default_ipv4["gateway"] }}
+dns={{ ansible_default_ipv4["gateway"] }};8.8.8.8;8.8.4.4

@@ -1,0 +1,9 @@
+---
+timezone: "Africa/Cairo"
+users:
+  - name: "{{ main_user }}"
+    password: "123" # dummy password
+    groups:
+      - "wheel"
+      - "video"
+      - "input"

@@ -1,0 +1,195 @@
+---
+- name: "Check if ArcoLinux Repos are Present in /etc/pacman.conf"
+  ignore_errors: true
+  changed_when: false
+  ansible.builtin.command:
+    cmd: "grep -q arcolinux_repo /etc/pacman.conf"
+  register: grep_arco_repos
+
+- name: Add ArcoLinux Repositories to Pacman
+  when: grep_arco_repos.rc != 0
+  ansible.builtin.include_tasks:
+    file: "arco-repos.yml"
+
+- name: Install Essential Packages
+  community.general.pacman:
+    state: present
+    package:
+      - arcolinux-keyring
+      - arcolinux-mirrorlist-git
+      - base
+      - base-devel
+      - bash-completion
+      - linux-headers
+      - linux-lts-headers
+      - linux-firmware
+      - cronie
+      - dnsmasq
+      - duf
+      - fuse2
+      - git
+      - hwinfo
+      - libibus
+      - libiodbc
+      - man-db
+      - man-pages
+      - opendoas
+      - os-prober
+      - p7zip
+      - python-pip
+      - rsync
+      - sshpass
+      - sudo
+      - unrar
+      - unzip
+      - neovim
+      - wget
+      - yay-bin
+      - zip
+      - zram-generator
+      - zsh
+      - zsh-autosuggestions
+      - zsh-fast-syntax-highlighting
+      - zsh-theme-powerlevel10k-git
+
+- name: Install Nvidia Drivers
+  when: nvidia
+  community.general.pacman:
+    state: present
+    package:
+      - nvidia-dkms
+      - nvidia-settings
+      - opencl-nvidia
+      - libva-nvidia-driver
+      - libva-mesa-driver
+      - libva-utils
+      - libvdpau-va-gl
+      - mesa-utils
+      - mesa-vdpau
+      - vdpauinfo
+      - nvtop
+
+- name: Install Bluetooth Support Packages
+  when: bluetooth
+  community.general.pacman:
+    state: present
+    package:
+      - blueman
+
+- name: Install CLI Packages
+  when: cli_tools
+  community.general.pacman:
+    state: present
+    package:
+      - bc
+      - bat
+      - aria2
+      - at
+      - atool
+      - btop
+      - htop
+      - eza
+      - fzf
+      - neofetch
+      - net-tools
+      - pass
+      - pass-otp
+      - ripgrep
+      - python-pipx
+      - python-pywal
+      - tcpdump
+      - xorg-xlsclients
+      - ydotool
+      - yt-dlp
+      - zbar
+      - zoxide
+
+- name: Install Desktop Environment Packages
+  when: desktop is defined and desktop != "none"
+  ansible.builtin.include_tasks:
+    file: "{{ desktop }}-desktop.yml"
+
+- name: Install Docker Packages
+  when: docker
+  community.general.pacman:
+    state: present
+    package:
+      - docker
+      - docker-buildx
+      - docker-compose
+
+- name: Install Fonts Packages
+  when: fonts
+  community.general.pacman:
+    state: present
+    package:
+      - nerd-fonts
+      - noto-fonts
+      - noto-fonts-emoji
+      - ttf-opensans
+      - ttf-ms-fonts
+
+- name: Install Virtualization Packages
+  when: virtualization
+  community.general.pacman:
+    state: present
+    package:
+      - libvirt
+      - qemu-full
+      - virt-manager
+
+- name: Install Rust Packages
+  when: rust
+  community.general.pacman:
+    state: present
+    package:
+      - rustup
+      - rust-analyzer
+
+- name: Install Java Packages
+  when: java
+  community.general.pacman:
+    state: present
+    package:
+      - gradle
+      - java-commons-lang
+
+- name: Install Office Packages
+  when: office
+  community.general.pacman:
+    state: present
+    package:
+      - libreoffice-fresh
+      - libreoffice-fresh-ar
+
+- name: Install Additional Packages
+  when: extras
+  community.general.pacman:
+    state: present
+    package:
+      - alsa-tools
+      - alsa-utils
+      - ansible
+      - aspell
+      - aspell-en
+      - flameshot-git
+      - grub-customizer
+      - gthumb
+      - gtk-vnc
+      - gtklock
+      - guvcview
+      - kdeconnect
+      - kvantum
+      - lazygit
+      - libvncserver
+      - obs-studio
+      - obsidian
+      - qalculate-gtk
+      - qbittorrent
+      - qpwgraph
+      - remmina
+      - spice-gtk
+      - syncthing
+      - webkitgtk-6.0
+      - wf-recorder
+      - wofi

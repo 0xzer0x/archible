@@ -1,0 +1,29 @@
+---
+- name: Ensure chezmoi is available
+  community.general.pacman:
+    state: present
+    name:
+      - chezmoi
+      - git
+
+- name: Ensure Gitlab is in known_hosts File
+  become: true
+  become_user: "{{ main_user }}"
+  ansible.builtin.known_hosts:
+    state: present
+    name: gitlab.com
+    key: "gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf"
+
+- name: Initalize Dotfiles Repository
+  become: true
+  become_user: "{{ main_user }}"
+  ansible.builtin.command:
+    cmd: "chezmoi init --branch {{ dotrepo_branch }} 'https://0xzer0x:{{ gitlab_token }}@gitlab.com/0xzer0x/dotfiles.git'"
+    creates: "/home/{{ main_user }}/.local/share/chezmoi/.git"
+
+- name: Pull And Apply Dotfiles
+  become: true
+  become_user: "{{ main_user }}"
+  ansible.builtin.command:
+    cmd: "chezmoi update --force"
+  changed_when: true

@@ -1,0 +1,20 @@
+---
+- name: Install SDDM Theme
+  changed_when: true
+  ansible.builtin.command:
+    cmd: "yay --noconfirm --needed --aur -Sy sddm-catppuccin-git"
+
+- name: Copy SDDM Config
+  ansible.builtin.copy:
+    src: "{{ item['src'] }}"
+    dest: "{{ item['dest'] }}"
+    mode: "{{ item['mode'] }}"
+  loop:
+    - src: "sddm.conf"
+      dest: "/etc/sddm.conf"
+      mode: "644"
+
+- name: Ensure SDDM Service is Enabled
+  ansible.builtin.service:
+    name: sddm.service
+    enabled: true

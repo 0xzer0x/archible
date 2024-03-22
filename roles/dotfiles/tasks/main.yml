@@ -1,0 +1,45 @@
+---
+- name: Set User Shell to ZSH
+  ansible.builtin.user:
+    name: "{{ main_user }}"
+    shell: "/usr/bin/zsh"
+
+- name: Create zsh Cache Directory
+  become: true
+  become_user: "{{ main_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ main_user }}/.cache/zsh"
+    state: directory
+    mode: "755"
+
+- name: Set Doas File Content
+  ansible.builtin.copy:
+    dest: "/etc/doas.conf"
+    mode: "600"
+    content: |
+      {% for cmd in ['btrfs', 'pacman', 'yay', 'timeshift', 'snapper'] %}
+      permit nopass {{ main_user }} as root cmd {{ cmd }}
+      {% endfor %}
+
+- name: Configure User Dotfiles
+  when: gitlab_token is defined
+  ansible.builtin.include_tasks:
+    file: "dotfiles.yml"
+
+- name: Add Additional Fonts
+  ansible.builtin.include_tasks:
+    file: "fonts.yml"
+
+- name: Install Gtk Theme
+  ansible.builtin.include_tasks:
+    file: "gtk.yml"
+
+- name: Check SDDM Theme
+  ansible.builtin.stat:
+    path: "/usr/share/sddm/themes/catppuccin"
+  register: catppuccin_sddm
+
+- name: Configure SDDM as Display Manager
+  when: not catppuccin_sddm.stat.exists
+  ansible.builtin.include_tasks:
+    file: "sddm.yml"

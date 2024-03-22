@@ -1,0 +1,11 @@
+---
+base_packages:
+  - base
+  - linux
+  - linux-firmware
+  - archlinux-keyring
+  - grub
+  - sudo
+  - openssh
+  - networkmanager
+  - python

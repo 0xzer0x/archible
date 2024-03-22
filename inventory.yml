@@ -1,0 +1,16 @@
+---
+ungrouped:
+  hosts:
+    arch:
+      ansible_connection: ssh
+      ansible_host: 192.168.122.26
+      ansible_user: root
+      ansible_ssh_common_args: "-o 'UserKnownHostsFile=/dev/null' -o 'StrictHostKeyChecking=no'"
+
+install:
+  hosts:
+    arch:
+
+configure:
+  hosts:
+    arch:

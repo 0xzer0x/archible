@@ -1,0 +1,12 @@
+---
+desktop: hyprland
+cli_tools: true
+fonts: true
+nvidia: false
+docker: false
+bluetooth: false
+extras: false
+virtualization: false
+java: false
+rust: false
+office: false

@@ -1,0 +1,14 @@
+---
+- name: Setup Zram Device
+  ansible.builtin.copy:
+    content: |
+      [zram0]
+      zram-size = min(min(ram, 4096) + max(ram - 4096, 0) / 2, 32 * 1024)
+    dest: "/etc/systemd/zram-generator.conf"
+    mode: "644"
+
+- name: Start Zram Device
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: "systemd-zram-setup@zram0"
+    state: started

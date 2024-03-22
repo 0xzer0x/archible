@@ -1,0 +1,16 @@
+---
+- name: Create 300MB EFI Partition
+  community.general.parted:
+    device: "{{ install_disk }}"
+    label: gpt
+    number: 1
+    state: present
+    part_start: 4MiB
+    part_end: 304MiB
+    fs_type: fat32
+
+- name: Create Fat32 EFI
+  community.general.filesystem:
+    dev: "{{ install_disk }}1"
+    fstype: vfat
+    opts: "-F 32"

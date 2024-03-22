@@ -1,0 +1,38 @@
+---
+- name: Check Zram Config
+  ansible.builtin.stat:
+    path: "/etc/systemd/zram-generator.conf"
+  register: zram_conf
+
+- name: Configure Zram
+  when: not zram_conf.stat.exists
+  ansible.builtin.include_tasks:
+    file: "zram.yml"
+
+- name: Check Snapper Config
+  ansible.builtin.stat:
+    path: "/etc/snapper/configs/root"
+  register: snapper_conf
+
+- name: Configure Snapper
+  when: not snapper_conf.stat.exists
+  ansible.builtin.include_tasks:
+    file: "snapper.yml"
+
+- name: "Set Timezone to {{ timezone }}"
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: "Enable NTP Service"
+  ansible.builtin.service:
+    name: "systemd-timesyncd"
+    state: "started"
+    enabled: true
+
+- name: Add Users
+  loop: "{{ users }}"
+  ansible.builtin.user:
+    name: "{{ item['name'] }}"
+    append: true
+    password: "{{ item['password'] | password_hash('sha512') }}"
+    groups: "{{ item['groups'] }}"

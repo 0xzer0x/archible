@@ -1,0 +1,6 @@
+---
+- name: Copy SF-Arabic Font
+  ansible.builtin.copy:
+    src: "SF-Arabic"
+    dest: "/usr/share/fonts/SF-Arabic/"
+    mode: "755"

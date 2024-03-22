@@ -1,0 +1,41 @@
+---
+- name: Mount Root Subvolume
+  ansible.posix.mount:
+    path: "{{ fsroot }}"
+    src: "{{ install_disk }}2"
+    fstype: btrfs
+    opts: "{{ btrfs_mount_opts }},subvol=/@"
+    state: mounted
+
+- name: Create FS Structure
+  ansible.builtin.file:
+    path: "{{ fsroot }}/{{ item }}"
+    state: directory
+    mode: "755"
+  loop:
+    - "efi"
+    - "home"
+    - ".snapshots"
+
+- name: Mount System Boot Partition(s)
+  ansible.posix.mount:
+    path: "{{ fsroot }}/{{ item['dir'] }}"
+    src: "{{ install_disk }}{{ item['part'] }}"
+    fstype: "{{ item['type'] }}"
+    opts: defaults
+    state: mounted
+  loop:
+    - { part: 1, type: vfat, dir: efi }
+
+- name: Mount Other Subvolumes
+  ansible.posix.mount:
+    path: "{{ fsroot }}/{{ item['dir'] }}"
+    src: "{{ install_disk }}2"
+    fstype: btrfs
+    opts: "{{ btrfs_mount_opts }},subvol={{ item['subvol'] }}"
+    state: mounted
+  loop:
+    - dir: "home"
+      subvol: "/@home"
+    - dir: ".snapshots"
+      subvol: "/@snapshots"

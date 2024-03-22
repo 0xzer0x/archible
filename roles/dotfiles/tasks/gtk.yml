@@ -1,0 +1,11 @@
+---
+- name: Check Adw-gtk3 Theme
+  ansible.builtin.stat:
+    path: "/usr/share/themes/adw-gtk3"
+  register: adw_gtk3
+
+- name: Install Adw-gtk3 Theme
+  when: not adw_gtk3.stat.exists
+  ansible.builtin.command:
+    cmd: "yay --noconfirm --needed --aur -Sy adw-gtk3"
+  changed_when: true

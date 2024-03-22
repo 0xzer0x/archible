@@ -1,0 +1,41 @@
+---
+- name: Install Arch
+  hosts: install
+  tags: install
+  vars:
+    fsroot: /mnt
+    filesystem: btrfs
+    boot_mode: uefi
+  roles:
+    - partitions
+    - system
+    - chroot
+
+- name: Reboot Into New Installation
+  hosts: install
+  tags: reboot
+  tasks:
+    - name: Reboot System
+      ansible.builtin.command:
+        cmd: "reboot"
+      changed_when: false
+      async: 1
+      poll: 0
+
+    - name: Wait for Reboot
+      ansible.builtin.wait_for_connection:
+        connect_timeout: 20
+        timeout: 300
+        delay: 5
+        sleep: 5
+
+- name: Post Installation Steps
+  tags: post-install
+  hosts: configure
+  vars:
+    main_user: youssef
+  roles:
+    - role: configure
+    - role: packages
+    - role: dotfiles
+    - role: flatpak

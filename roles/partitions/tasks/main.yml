@@ -1,0 +1,12 @@
+---
+- name: Create System Boot Partiton(s)
+  ansible.builtin.include_tasks:
+    file: "{{ boot_mode }}.yml"
+
+- name: Create Main Partition(s)
+  ansible.builtin.include_tasks:
+    file: "{{ filesystem }}.yml"
+
+- name: Mount Partition(s)
+  ansible.builtin.include_tasks:
+    file: "mount-{{ filesystem }}.yml"

@@ -1,0 +1,11 @@
+---
+- name: Remove Ansible NetworkManager Profile
+  ansible.builtin.file:
+    path: "/etc/NetworkManager/system-connections/ansible-static.nmconnection"
+    state: absent
+
+- name: Reset SSH Root Login Configuration
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: "^PermitRootLogin"
+    line: "#PermitRootLogin yes"
