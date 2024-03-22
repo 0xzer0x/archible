@@ -17,5 +17,6 @@
     enabled: true
     state: started
   loop:
+    - "snapper-boot.timer"
     - "snapper-cleanup.timer"
     - "snapper-timeline.timer"
