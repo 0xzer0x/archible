@@ -1,4 +1,11 @@
 ---
+- name: Ensure Zram Generator is available
+  community.general.pacman:
+    state: present
+    package:
+      - zram-generator
+      - zramctl
+
 - name: Setup Zram Device
   ansible.builtin.copy:
     content: |

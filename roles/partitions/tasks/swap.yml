@@ -1,0 +1,20 @@
+---
+- name: Create Swap Partiton
+  community.general.parted:
+    device: "{{ install_disk }}"
+    label: gpt
+    number: 2
+    state: present
+    part_start: "{{ (boot_mode == 'uefi') | ternary(304, 6) }}MiB"
+    part_end: "{{ ((boot_mode == 'uefi') | ternary(304, 6)) + swap_size_mib }}MiB"
+    fs_type: linux-swap
+
+- name: Format Swap Partition
+  community.general.filesystem:
+    device: "{{ install_disk }}2"
+    state: present
+    fstype: swap
+
+- name: Mount Swap
+  ansible.builtin.command:
+    cmd: "swapon {{ install_disk }}2"

@@ -1,7 +1,7 @@
 ---
-desktop: hyprland
+desktop: none
 cli_tools: true
-fonts: true
+fonts: false
 nvidia: false
 docker: false
 bluetooth: false

@@ -6,6 +6,13 @@
       - chezmoi
       - git
 
+- name: Create User SSH Directory
+  ansible.builtin.file:
+    state: directory
+    path: "/home/{{ main_user }}/.ssh"
+    owner: "{{ main_user }}"
+    mode: "700"
+
 - name: Ensure Gitlab is in known_hosts File
   become: true
   become_user: "{{ main_user }}"

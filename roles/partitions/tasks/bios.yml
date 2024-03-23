@@ -1,0 +1,11 @@
+---
+- name: Create Bios Grub Partition
+  community.general.parted:
+    device: "{{ install_disk }}"
+    label: gpt
+    number: 1
+    state: present
+    part_start: 4MiB
+    part_end: 6MiB
+    flags:
+      - "bios_grub"

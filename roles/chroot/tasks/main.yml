@@ -40,10 +40,18 @@
 
 - name: Install GRUB2
   block:
-    - name: "Install GRUB2"
-      changed_when: true
+    - name: "Install GRUB2 (UEFI)"
+      when: boot_mode == 'uefi'
       ansible.builtin.command:
         cmd: "arch-chroot {{ fsroot }} /usr/bin/grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
+      changed_when: true
+
+    - name: "Install GRUB2 (BIOS)"
+      when: boot_mode == 'bios'
+      ansible.builtin.command:
+        cmd: "arch-chroot {{ fsroot }} /usr/bin/grub-install {{ install_disk }}"
+      changed_when: true
+
     - name: "Generate GRUB2 Configuration"
       changed_when: true
       ansible.builtin.command:

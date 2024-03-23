@@ -5,7 +5,7 @@
   vars:
     fsroot: /mnt
     filesystem: btrfs
-    boot_mode: uefi
+    boot_mode: bios
   roles:
     - partitions
     - system

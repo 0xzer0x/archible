@@ -3,6 +3,11 @@
   ansible.builtin.include_tasks:
     file: "{{ boot_mode }}.yml"
 
+- name: Create Swap
+  when: swap_size_mib > 0
+  ansible.builtin.include_tasks:
+    file: "swap.yml"
+
 - name: Create Main Partition(s)
   ansible.builtin.include_tasks:
     file: "{{ filesystem }}.yml"

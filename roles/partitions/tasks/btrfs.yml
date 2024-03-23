@@ -3,20 +3,20 @@
   community.general.parted:
     device: "{{ install_disk }}"
     label: gpt
-    number: 2
+    number: "{{ (swap_size_mib > 0) | ternary(3, 2) }}"
     state: present
-    part_start: 304MiB
+    part_start: "{{ ((boot_mode == 'uefi') | ternary(304, 6)) + swap_size_mib }}MiB"
     fs_type: btrfs
 
 - name: Create Btrfs Partition
   community.general.filesystem:
-    dev: "{{ install_disk }}2"
+    dev: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"
     fstype: btrfs
 
 - name: Create btrfs subvolumes
   community.general.btrfs_subvolume:
     automount: true
-    filesystem_device: "{{ install_disk }}2"
+    filesystem_device: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"
     name: "/{{ item }}"
     state: present
   loop:
