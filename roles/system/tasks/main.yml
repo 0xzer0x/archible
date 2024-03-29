@@ -7,6 +7,14 @@
         {{ pkg | quote }}
       {% endfor %}
 
+- name: Install BIOS-Specific Packages
+  when: boot_mode == "bios"
+  ansible.builtin.command:
+    cmd: >
+      arch-chroot {{ fsroot }} pacman -Sy --noconfirm --needed
+      dosfstools
+      mtools
+
 - name: Install UEFI-Specific Packages
   when: boot_mode == "uefi"
   ansible.builtin.command:

@@ -5,6 +5,7 @@ base_packages:
   - linux-firmware
   - archlinux-keyring
   - grub
+  - os-prober
   - sudo
   - openssh
   - networkmanager
