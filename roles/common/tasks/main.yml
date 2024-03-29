@@ -1,21 +1,23 @@
 ---
 - name: Check Zram Config
+  when: zram
   ansible.builtin.stat:
     path: "/etc/systemd/zram-generator.conf"
   register: zram_conf
 
 - name: Configure Zram
-  when: not zram_conf.stat.exists
+  when: zram and not zram_conf.stat.exists
   ansible.builtin.include_tasks:
     file: "zram.yml"
 
 - name: Check Snapper Config
+  when: filesystem == "btrfs"
   ansible.builtin.stat:
     path: "/etc/snapper/configs/root"
   register: snapper_conf
 
 - name: Configure Snapper
-  when: not snapper_conf.stat.exists
+  when: filesystem == "btrfs" and not snapper_conf.stat.exists
   ansible.builtin.include_tasks:
     file: "snapper.yml"
 

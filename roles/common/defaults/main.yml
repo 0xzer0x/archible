@@ -1,4 +1,5 @@
 ---
+zram: true
 timezone: "Africa/Cairo"
 users:
   - name: "{{ main_user }}"

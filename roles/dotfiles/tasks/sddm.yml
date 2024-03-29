@@ -4,6 +4,18 @@
   ansible.builtin.command:
     cmd: "yay --noconfirm --needed --aur -Sy sddm-catppuccin-git"
 
+- name: Copy Custom Theme Background
+  ansible.builtin.copy:
+    src: "world-map.png"
+    dest: "/usr/share/sddm/themes/catppuccin/backgrounds/world-map.png"
+    mode: "644"
+
+- name: Set Custom Theme Background
+  ansible.builtin.lineinfile:
+    path: "/usr/share/sddm/themes/catppuccin/theme.conf"
+    regex: "^Background="
+    line: 'Background="backgrounds/world-map.png"'
+
 - name: Copy SDDM Config
   ansible.builtin.copy:
     src: "{{ item['src'] }}"

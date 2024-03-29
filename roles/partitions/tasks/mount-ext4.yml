@@ -1,0 +1,7 @@
+---
+- name: Mount Root Ext4 Partiton
+  ansible.posix.mount:
+    fstype: ext4
+    state: mounted
+    path: "{{ fsroot }}"
+    src: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"

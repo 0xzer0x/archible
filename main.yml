@@ -4,8 +4,10 @@
   tags: install
   vars:
     fsroot: /mnt
-    filesystem: btrfs
+    filesystem: ext4
     boot_mode: bios
+    install_disk: /dev/vda
+    swap_size_mib: 2048
   roles:
     - partitions
     - system
@@ -35,7 +37,8 @@
   vars:
     main_user: youssef
   roles:
-    - role: configure
-    - role: packages
-    - role: dotfiles
-    - role: flatpak
+    - common
+    - packages
+    - dotfiles
+    - flatpak
+    - cleanup

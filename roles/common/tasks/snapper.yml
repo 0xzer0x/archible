@@ -1,4 +1,10 @@
 ---
+- name: Ensure Snapper is Installed
+  community.general.pacman:
+    state: present
+    package:
+      - snapper
+
 - name: Copy Snapper Config
   ansible.builtin.template:
     src: "snapper-root.j2"

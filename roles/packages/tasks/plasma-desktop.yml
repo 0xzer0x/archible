@@ -1,0 +1,10 @@
+---
+- name: Install Plasma Desktop
+  community.general.pacman:
+    state: present
+    package:
+      - plasma
+      - konsole
+      - firefox
+      - mpv
+      - okular

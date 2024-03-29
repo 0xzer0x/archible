@@ -1,4 +1,4 @@
 ---
 btrfs_mount_opts: rw,compress=zstd
 install_disk: /dev/vda
-swap_size_mib: 2048
+swap_size_mib: 2048 # 0 = no swap

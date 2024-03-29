@@ -1,0 +1,14 @@
+---
+- name: Create Root Partition
+  community.general.parted:
+    device: "{{ install_disk }}"
+    label: gpt
+    number: "{{ (swap_size_mib > 0) | ternary(3, 2) }}"
+    state: present
+    part_start: "{{ ((boot_mode == 'uefi') | ternary(304, 6)) + swap_size_mib }}MiB"
+    fs_type: ext4
+
+- name: Create Ext4 Filesystem
+  community.general.filesystem:
+    dev: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"
+    fstype: ext4
