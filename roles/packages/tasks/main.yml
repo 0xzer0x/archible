@@ -2,6 +2,7 @@
 - name: "Check if ArcoLinux Repos are Present in /etc/pacman.conf"
   ignore_errors: true
   changed_when: false
+  failed_when: false
   ansible.builtin.command:
     cmd: "grep -q arcolinux_repo /etc/pacman.conf"
   register: grep_arco_repos

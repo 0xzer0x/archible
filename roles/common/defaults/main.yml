@@ -4,7 +4,7 @@ qemu_guest: false
 timezone: "Africa/Cairo"
 users:
   - name: "{{ main_user }}"
-    password: "123" # dummy password
+    password: "$1$yIUjcv1r$ZsO/PLtUAUm43ygw7iprl1" # sha512 password hash (run `openssl passwd "my-secret-pass"`)
     groups:
       - "wheel"
       - "video"

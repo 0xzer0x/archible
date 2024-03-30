@@ -43,9 +43,7 @@
   ansible.builtin.include_tasks:
     file: "sddm.yml"
 
-- name: Copy Desktop Wallpaper
-  ansible.builtin.copy:
-    src: "wall.png"
-    dest: "/home/{{ main_user }}/Pictures/wall.png"
-    mode: "644"
-    owner: "{{ main_user }}"
+- name: Configure Desktop Wallpaper
+  when: desktop == "hyprland"
+  ansible.builtin.include_tasks:
+    file: "wallpaper.yml"

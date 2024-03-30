@@ -33,15 +33,15 @@
     state: "started"
     enabled: true
 
-- name: Add Qemu Guest Packages
-  when: qemu_guest
-  ansible.builtin.include_tasks:
-    file: "qemu-guest.yml"
-
 - name: Add Users
   loop: "{{ users }}"
   ansible.builtin.user:
     name: "{{ item['name'] }}"
     append: true
-    password: "{{ item['password'] | password_hash('sha512') }}"
+    password: "{{ item['password'] }}"
     groups: "{{ item['groups'] }}"
+
+- name: Configure Qemu Guest
+  when: qemu_guest
+  ansible.builtin.include_tasks:
+    file: "qemu-guest.yml"

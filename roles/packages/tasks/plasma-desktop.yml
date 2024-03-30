@@ -3,8 +3,10 @@
   community.general.pacman:
     state: present
     package:
+      - ttf-fantasque-nerd
+      - ttf-opensans
       - plasma
-      - konsole
+      - foot
       - firefox
       - mpv
       - okular

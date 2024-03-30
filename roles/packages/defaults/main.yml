@@ -1,5 +1,5 @@
 ---
-desktop: hyprland
+desktop: none
 cli_tools: true
 fonts: false
 nvidia: false
