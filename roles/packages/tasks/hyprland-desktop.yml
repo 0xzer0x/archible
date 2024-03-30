@@ -49,6 +49,8 @@
       - qt6ct
       - waybar
       - sddm
+      - ttf-fantasque-nerd
+      - ttf-opensans
       - weston
       - network-manager-applet
       - clipman

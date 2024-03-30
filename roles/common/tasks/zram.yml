@@ -4,7 +4,6 @@
     state: present
     package:
       - zram-generator
-      - zramctl
 
 - name: Setup Zram Device
   ansible.builtin.copy:

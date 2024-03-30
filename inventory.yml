@@ -3,7 +3,7 @@ ungrouped:
   hosts:
     arch:
       ansible_connection: ssh
-      ansible_host: 192.168.122.26
+      ansible_host: 192.168.122.88
       ansible_user: root
       ansible_password: "123" # password for archiso root user and system root user
       ansible_ssh_common_args: "-o 'UserKnownHostsFile=/dev/null' -o 'StrictHostKeyChecking=no'"

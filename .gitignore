@@ -1,1 +1,2 @@
-group_vars
+group_vars/all/*
+!group_vars/all/config.yml

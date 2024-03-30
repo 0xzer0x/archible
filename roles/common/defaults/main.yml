@@ -1,5 +1,6 @@
 ---
 zram: true
+qemu_guest: false
 timezone: "Africa/Cairo"
 users:
   - name: "{{ main_user }}"

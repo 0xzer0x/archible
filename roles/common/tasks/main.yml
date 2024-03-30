@@ -10,16 +10,18 @@
   ansible.builtin.include_tasks:
     file: "zram.yml"
 
-- name: Check Snapper Config
+- name: Configure Btrfs Snapshots
   when: filesystem == "btrfs"
-  ansible.builtin.stat:
-    path: "/etc/snapper/configs/root"
-  register: snapper_conf
+  block:
+    - name: Check Snapper Config
+      ansible.builtin.stat:
+        path: "/etc/snapper/configs/root"
+      register: snapper_conf
 
-- name: Configure Snapper
-  when: filesystem == "btrfs" and not snapper_conf.stat.exists
-  ansible.builtin.include_tasks:
-    file: "snapper.yml"
+    - name: Configure Snapper
+      when: not snapper_conf.stat.exists
+      ansible.builtin.include_tasks:
+        file: "snapper.yml"
 
 - name: "Set Timezone to {{ timezone }}"
   community.general.timezone:
@@ -30,6 +32,11 @@
     name: "systemd-timesyncd"
     state: "started"
     enabled: true
+
+- name: Add Qemu Guest Packages
+  when: qemu_guest
+  ansible.builtin.include_tasks:
+    file: "qemu-guest.yml"
 
 - name: Add Users
   loop: "{{ users }}"

@@ -2,12 +2,6 @@
 - name: Install Arch
   hosts: install
   tags: install
-  vars:
-    fsroot: /mnt
-    filesystem: ext4
-    boot_mode: bios
-    install_disk: /dev/vda
-    swap_size_mib: 2048
   roles:
     - partitions
     - system
