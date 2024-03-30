@@ -2,6 +2,14 @@
 - name: Install Arch
   hosts: install
   tags: install
+  pre_tasks:
+    - name: Check Boot Mode
+      ansible.builtin.stat:
+        path: "/sys/firmware/efi/fw_platform_size"
+      register: efi_size
+    - name: Set Boot Mode Fact
+      ansible.builtin.set_fact:
+        boot_mode: "{{ efi_size.stat.exists | ternary('uefi', 'bios') }}"
   roles:
     - partitions
     - system
@@ -34,5 +42,4 @@
     - common
     - packages
     - dotfiles
-    - flatpak
     - cleanup

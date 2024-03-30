@@ -1,7 +1,6 @@
 ---
 fsroot: /mnt
 filesystem: ext4
-boot_mode: bios
 install_disk: /dev/vda
 swap_size_mib: 2048
 qemu_guest: true
