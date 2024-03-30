@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Archlinux-logo-standard-version.png/1920px-Archlinux-logo-standard-version.png" alt="Arch Linux Logo" height="200">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ansible_logo.svg/800px-Ansible_logo.svg.png" alt="Ansible Logo" height="200">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Archlinux-logo-standard-version.png/1920px-Archlinux-logo-standard-version.png" alt="Arch Linux Logo" height="150">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Ansible_logo.svg/800px-Ansible_logo.svg.png" alt="Ansible Logo" height="150">
   <h2 align="center">Ansible Playbook for Arch Linux Installation and Configuration</h2>
 </p>
 
