@@ -25,7 +25,6 @@
       changed_when: false
       async: 1
       poll: 0
-
     - name: Wait for Reboot
       ansible.builtin.wait_for_connection:
         connect_timeout: 20
@@ -36,8 +35,6 @@
 - name: Post Installation Steps
   tags: post-install
   hosts: configure
-  vars:
-    main_user: youssef
   roles:
     - common
     - packages

@@ -3,4 +3,5 @@ fsroot: /mnt
 filesystem: ext4
 install_disk: /dev/vda
 swap_size_mib: 2048
+main_user: youssef
 qemu_guest: true
