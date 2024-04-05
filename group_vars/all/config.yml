@@ -6,3 +6,4 @@ swap_size_mib: 2048
 main_user: youssef
 qemu_guest: true
 desktop: plasma
+dotrepo: https://0xzer0x:{{ gitlab_token }}@gitlab.com/0xzer0x/dotfiles.git

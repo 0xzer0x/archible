@@ -25,7 +25,7 @@
   become: true
   become_user: "{{ main_user }}"
   ansible.builtin.command:
-    cmd: "chezmoi init --branch {{ dotrepo_branch }} 'https://0xzer0x:{{ gitlab_token }}@gitlab.com/0xzer0x/dotfiles.git'"
+    cmd: "chezmoi init --branch {{ dotrepo_branch }} '{{ dotrepo }}'"
     creates: "/home/{{ main_user }}/.local/share/chezmoi/.git"
 
 - name: Pull And Apply Dotfiles
