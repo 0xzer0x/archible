@@ -1,52 +1,52 @@
 ---
-- name: Generate Fstab File
+- name: Generate fstab file
   ansible.builtin.shell:
     cmd: "genfstab -U {{ fsroot }} > {{ fsroot }}/etc/fstab"
 
-- name: Sync Hardware Clock with System Clock
+- name: Sync hardware clock with system clock
   ansible.builtin.command:
     cmd: "arch-chroot {{ fsroot }} /usr/bin/hwclock --systohc"
   changed_when: false
 
-- name: Set Locale
+- name: Set locale
   ansible.builtin.lineinfile:
     path: "{{ fsroot }}/etc/locale.gen"
     regexp: '^#(en_US\.UTF-8 UTF-8)'
     line: '\g<1>'
     backrefs: true
 
-- name: Generate Locales
+- name: Generate locales
   ansible.builtin.command:
     cmd: "arch-chroot {{ fsroot }} /usr/bin/locale-gen"
   changed_when: true
 
-- name: Set Locale Config File
+- name: Set locale config file
   ansible.builtin.copy:
     content: "LANG=en_US.UTF-8"
     dest: "{{ fsroot }}/etc/locale.conf"
     mode: "644"
 
-- name: Set Hostname
+- name: Set hostname
   ansible.builtin.copy:
     content: "{{ hostname }}"
     dest: "{{ fsroot }}/etc/hostname"
     mode: "644"
 
-- name: Allow Wheel Group to Run Sudo
+- name: Allow wheel Group to run sudo
   ansible.builtin.lineinfile:
     path: "{{ fsroot }}/etc/sudoers"
     regexp: '^#%wheel ALL=\(ALL:ALL\) ALL'
     line: "%wheel ALL=(ALL:ALL) ALL"
 
-- name: Install GRUB2
+- name: Install GRUB
   block:
-    - name: "Install GRUB2 (UEFI)"
+    - name: "Install GRUB (UEFI)"
       when: boot_mode == 'uefi'
       ansible.builtin.command:
         cmd: "arch-chroot {{ fsroot }} /usr/bin/grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB"
       changed_when: true
 
-    - name: "Install GRUB2 (BIOS)"
+    - name: "Install GRUB (BIOS)"
       when: boot_mode == 'bios'
       ansible.builtin.command:
         cmd: "arch-chroot {{ fsroot }} /usr/bin/grub-install {{ install_disk }}"
@@ -65,17 +65,17 @@
     - "sshd"
     - "NetworkManager"
 
-- name: Set Root Password
+- name: Set root password
   changed_when: true
   ansible.builtin.command:
     cmd: "arch-chroot {{ fsroot }} /usr/bin/bash -c 'echo 'root:{{ ansible_password }}' | chpasswd'"
 
-- name: Permit Root SSH Login Temporarily
+- name: Permit root SSH login temporarily
   ansible.builtin.lineinfile:
     path: "{{ fsroot }}/etc/ssh/sshd_config"
     regexp: "^#PermitRootLogin"
     line: "PermitRootLogin yes"
 
-- name: Setup NetworkManager Profile
+- name: Setup networkmanager profile
   ansible.builtin.include_tasks:
     file: "network.yml"

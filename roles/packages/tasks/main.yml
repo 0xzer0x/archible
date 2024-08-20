@@ -1,5 +1,5 @@
 ---
-- name: "Check if ArcoLinux Repos are Present in /etc/pacman.conf"
+- name: "Check if ArcoLinux repos are present in /etc/pacman.conf"
   ignore_errors: true
   changed_when: false
   failed_when: false
@@ -7,17 +7,15 @@
     cmd: "grep -q arcolinux_repo /etc/pacman.conf"
   register: grep_arco_repos
 
-- name: Add ArcoLinux Repositories to Pacman
+- name: Add ArcoLinux repositories to pacman
   when: grep_arco_repos.rc != 0
   ansible.builtin.include_tasks:
     file: "arco-repos.yml"
 
-- name: Install Essential Packages
+- name: Install essential packages
   community.general.pacman:
     state: present
     package:
-      - arcolinux-keyring
-      - arcolinux-mirrorlist-git
       - base
       - base-devel
       - bash-completion
@@ -130,7 +128,7 @@
       - ttf-opensans
       - ttf-ms-fonts
 
-- name: Install Virtualization Packages
+- name: Install virtualization packages
   when: virtualization
   community.general.pacman:
     state: present
@@ -139,15 +137,14 @@
       - qemu-full
       - virt-manager
 
-- name: Install Rust Packages
+- name: Install Rust packages
   when: rust
   community.general.pacman:
     state: present
     package:
       - rustup
-      - rust-analyzer
 
-- name: Install Java Packages
+- name: Install java packages
   when: java
   community.general.pacman:
     state: present
@@ -155,7 +152,7 @@
       - gradle
       - java-commons-lang
 
-- name: Install Office Packages
+- name: Install office packages
   when: office
   community.general.pacman:
     state: present
@@ -163,7 +160,7 @@
       - libreoffice-fresh
       - libreoffice-fresh-ar
 
-- name: Install Additional Packages
+- name: Install additional packages
   when: extras
   community.general.pacman:
     state: present
@@ -180,7 +177,6 @@
       - gtklock
       - guvcview
       - kdeconnect
-      - kvantum
       - lazygit
       - libvncserver
       - obs-studio
@@ -193,4 +189,3 @@
       - syncthing
       - webkitgtk-6.0
       - wf-recorder
-      - wofi

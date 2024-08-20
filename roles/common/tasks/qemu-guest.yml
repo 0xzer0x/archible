@@ -1,5 +1,5 @@
 ---
-- name: Install Qemu Guest Packages
+- name: Install qemu guest packages
   when: qemu_guest
   community.general.pacman:
     state: present
@@ -7,7 +7,7 @@
       - spice-vdagent
       - qemu-guest-agent
 
-- name: Ensure Spice Agent Service is Enabled
+- name: Ensure spice agent service is enabled
   ansible.builtin.service:
     name: spice-vdagentd
     state: started

@@ -1,17 +1,17 @@
 ---
-- name: Ensure Flatpak is Present
+- name: Ensure flatpak is present
   community.general.pacman:
     state: present
     package:
       - flatpak
 
-- name: Add Flathub Remote Repository
+- name: Add flathub remote repository
   community.general.flatpak_remote:
     name: flathub
     state: present
     flatpakrepo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
 
-- name: Install Flatpak Apps
+- name: Install flatpak apps
   loop: "{{ apps }}"
   community.general.flatpak:
     state: present

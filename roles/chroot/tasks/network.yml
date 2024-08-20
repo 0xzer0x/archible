@@ -1,5 +1,5 @@
 ---
-- name: Set NetworkManager Profile For The Current Ip
+- name: Set networkmanager profile for the current IP
   ansible.builtin.template:
     src: "ansible-static.nmconnection.j2"
     dest: "{{ fsroot }}/etc/NetworkManager/system-connections/ansible-static.nmconnection"

@@ -1,0 +1,11 @@
+- name: Create weston config directory
+  ansible.builtin.file:
+    state: directory
+    path: /etc/xdg/weston
+    mode: "755"
+
+- name: Copy weston.ini
+  ansible.builtin.copy:
+    src: weston.ini
+    dest: /etc/xdg/weston/weston.ini
+    mode: "644"

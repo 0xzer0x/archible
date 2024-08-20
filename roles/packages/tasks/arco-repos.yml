@@ -42,3 +42,10 @@
     - name: Update Pacman Database
       community.general.pacman:
         update_cache: true
+
+- name: Install keyring and mirrorlist packages
+  community.general.pacman:
+    state: present
+    package:
+      - arcolinux-keyring
+      - arcolinux-mirrorlist-git

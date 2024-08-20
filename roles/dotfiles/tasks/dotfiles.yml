@@ -6,14 +6,14 @@
       - chezmoi
       - git
 
-- name: Create User SSH Directory
+- name: Create user SSH directory
   ansible.builtin.file:
     state: directory
     path: "/home/{{ main_user }}/.ssh"
     owner: "{{ main_user }}"
     mode: "700"
 
-- name: Ensure Gitlab is in known_hosts File
+- name: Ensure Gitlab is in known_hosts file
   become: true
   become_user: "{{ main_user }}"
   ansible.builtin.known_hosts:
@@ -21,14 +21,14 @@
     name: gitlab.com
     key: "gitlab.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf"
 
-- name: Initalize Dotfiles Repository
+- name: Initalize chezmoi source directory
   become: true
   become_user: "{{ main_user }}"
   ansible.builtin.command:
     cmd: "chezmoi init --branch {{ dotrepo_branch }} '{{ dotrepo }}'"
     creates: "/home/{{ main_user }}/.local/share/chezmoi/.git"
 
-- name: Pull And Apply Dotfiles
+- name: Pull and apply dotfiles
   become: true
   become_user: "{{ main_user }}"
   ansible.builtin.command:

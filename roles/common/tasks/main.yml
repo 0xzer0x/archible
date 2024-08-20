@@ -1,16 +1,16 @@
 ---
-- name: Check Zram Config
+- name: Check zram config
   when: zram
   ansible.builtin.stat:
     path: "/etc/systemd/zram-generator.conf"
   register: zram_conf
 
-- name: Configure Zram
+- name: Configure zram
   when: zram and not zram_conf.stat.exists
   ansible.builtin.include_tasks:
     file: "zram.yml"
 
-- name: Configure Btrfs Snapshots
+- name: Configure btrfs snapshots
   when: filesystem == "btrfs"
   block:
     - name: Check Snapper Config
@@ -18,22 +18,22 @@
         path: "/etc/snapper/configs/root"
       register: snapper_conf
 
-    - name: Configure Snapper
+    - name: Configure snapper
       when: not snapper_conf.stat.exists
       ansible.builtin.include_tasks:
         file: "snapper.yml"
 
-- name: "Set Timezone to {{ timezone }}"
+- name: Set timezone to {{ timezone }}
   community.general.timezone:
     name: "{{ timezone }}"
 
-- name: "Enable NTP Service"
+- name: Enable NTP service
   ansible.builtin.service:
     name: "systemd-timesyncd"
     state: "started"
     enabled: true
 
-- name: Add Users
+- name: Add users
   loop: "{{ users }}"
   ansible.builtin.user:
     name: "{{ item['name'] }}"
@@ -41,7 +41,7 @@
     password: "{{ item['password'] }}"
     groups: "{{ item['groups'] }}"
 
-- name: Configure Qemu Guest
+- name: Configure qemu guest
   when: qemu_guest
   ansible.builtin.include_tasks:
     file: "qemu-guest.yml"

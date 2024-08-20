@@ -4,8 +4,8 @@
     path: "/usr/share/themes/adw-gtk3"
   register: adw_gtk3
 
-- name: Install Adw-gtk3 Theme
+- name: Install adw-gtk3 theme
   when: not adw_gtk3.stat.exists
-  ansible.builtin.command:
-    cmd: "yay --noconfirm --needed --aur -Sy adw-gtk3"
-  changed_when: true
+  community.general.pacman:
+    state: present
+    package: adw-gtk-theme

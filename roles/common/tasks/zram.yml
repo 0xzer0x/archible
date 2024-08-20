@@ -1,11 +1,11 @@
 ---
-- name: Ensure Zram Generator is available
+- name: Ensure zram generator is available
   community.general.pacman:
     state: present
     package:
       - zram-generator
 
-- name: Setup Zram Device
+- name: Setup zram device
   ansible.builtin.copy:
     content: |
       [zram0]
@@ -13,7 +13,7 @@
     dest: "/etc/systemd/zram-generator.conf"
     mode: "644"
 
-- name: Start Zram Device
+- name: Start zram device
   ansible.builtin.systemd_service:
     daemon_reload: true
     name: "systemd-zram-setup@zram0"

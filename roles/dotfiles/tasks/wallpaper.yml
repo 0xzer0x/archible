@@ -1,14 +1,14 @@
 ---
-- name: Create Pictures Directory
+- name: Create pictures directory
   ansible.builtin.file:
-    path: "/home/{{ main_user }}/Pictures"
     state: directory
-    mode: "755"
+    path: "/home/{{ main_user }}/Pictures"
     owner: "{{ main_user }}"
+    mode: "755"
 
-- name: Copy Wallpaper
+- name: Copy wallpaper
   ansible.builtin.copy:
     src: "wall.png"
     dest: "/home/{{ main_user }}/Pictures/wall.png"
-    mode: "644"
     owner: "{{ main_user }}"
+    mode: "644"

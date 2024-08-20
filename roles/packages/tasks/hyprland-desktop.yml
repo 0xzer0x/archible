@@ -54,7 +54,7 @@
       - weston
       - network-manager-applet
       - clipman
-      - rofi-lbonn-wayland
+      - rofi-wayland
       - pavucontrol
       - seahorse
       - slurp
@@ -68,4 +68,4 @@
       - zathura
       - zathura-cb
       - zathura-djvu
-      - zathura-pdf-poppler
+      - zathura-pdf-mupdf

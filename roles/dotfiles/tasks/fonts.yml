@@ -1,6 +1,11 @@
 ---
-- name: Copy SF-Arabic Font
+- name: Install SF-Arabic font
   ansible.builtin.copy:
     src: "SF-Arabic"
     dest: "/usr/share/fonts/SF-Arabic/"
     mode: "755"
+
+- name: Install OpenSans font
+  community.general.pacman:
+    state: present
+    package: ttf-opensans

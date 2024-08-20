@@ -5,13 +5,13 @@
     package:
       - snapper
 
-- name: Copy Snapper Config
+- name: Copy snapper config
   ansible.builtin.template:
     src: "snapper-root.j2"
     dest: "/etc/snapper/configs/root"
     mode: "640"
 
-- name: Register Config in Snapper
+- name: Register config in snapper
   ansible.builtin.lineinfile:
     path: "/etc/conf.d/snapper"
     regexp: "^SNAPPER_CONFIGS"

@@ -31,7 +31,7 @@
 
 - name: Install Gtk Theme
   ansible.builtin.include_tasks:
-    file: "gtk.yml"
+    file: "adw-gtk.yml"
 
 - name: Check SDDM Theme
   ansible.builtin.stat:
