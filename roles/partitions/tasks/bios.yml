@@ -1,5 +1,5 @@
 ---
-- name: Create Bios Grub Partition
+- name: Create BIOS grub partition
   community.general.parted:
     device: "{{ install_disk }}"
     label: gpt

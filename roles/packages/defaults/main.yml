@@ -1,4 +1,6 @@
 ---
+arcolinux_repos: false
+chaotic_repos: false
 desktop: none
 cli_tools: true
 fonts: false

@@ -1,5 +1,5 @@
 ---
-- name: Mount Root Ext4 Partiton
+- name: Mount root EXT4 partiton
   ansible.posix.mount:
     fstype: ext4
     state: mounted

@@ -1,16 +1,7 @@
 ---
-- name: "Check if ArcoLinux repos are present in /etc/pacman.conf"
-  ignore_errors: true
-  changed_when: false
-  failed_when: false
-  ansible.builtin.command:
-    cmd: "grep -q arcolinux_repo /etc/pacman.conf"
-  register: grep_arco_repos
-
-- name: Add ArcoLinux repositories to pacman
-  when: grep_arco_repos.rc != 0
+- name: Configure additional pacman repositories
   ansible.builtin.include_tasks:
-    file: "arco-repos.yml"
+    file: main-repositories.yml
 
 - name: Install essential packages
   community.general.pacman:
@@ -43,7 +34,7 @@
       - unzip
       - neovim
       - wget
-      - yay-bin
+      - yay
       - zip
       - zram-generator
       - zsh
@@ -51,7 +42,7 @@
       - zsh-fast-syntax-highlighting
       - zsh-theme-powerlevel10k-git
 
-- name: Install Nvidia Drivers
+- name: Install Nvidia drivers
   when: nvidia
   community.general.pacman:
     state: present
@@ -68,14 +59,14 @@
       - vdpauinfo
       - nvtop
 
-- name: Install Bluetooth Support Packages
+- name: Install bluetooth support packages
   when: bluetooth
   community.general.pacman:
     state: present
     package:
       - blueman
 
-- name: Install CLI Packages
+- name: Install CLI packages
   when: cli_tools
   community.general.pacman:
     state: present
@@ -89,7 +80,7 @@
       - htop
       - eza
       - fzf
-      - neofetch
+      - fastfetch
       - net-tools
       - pass
       - pass-otp
@@ -97,7 +88,6 @@
       - python-pipx
       - python-pywal
       - tcpdump
-      - xorg-xlsclients
       - ydotool
       - yt-dlp
       - zbar
@@ -116,6 +106,7 @@
       - docker
       - docker-buildx
       - docker-compose
+      - kubernetes-tools
 
 - name: Install Fonts Packages
   when: fonts
@@ -136,8 +127,9 @@
       - libvirt
       - qemu-full
       - virt-manager
+      - vagrant
 
-- name: Install Rust packages
+- name: Install rust packages
   when: rust
   community.general.pacman:
     state: present
@@ -170,7 +162,8 @@
       - ansible
       - aspell
       - aspell-en
-      - flameshot-git
+      - easyeffects
+      - flameshot
       - grub-customizer
       - gthumb
       - gtk-vnc

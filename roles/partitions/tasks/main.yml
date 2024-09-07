@@ -1,17 +1,17 @@
 ---
-- name: Create System Boot Partiton(s)
+- name: Create system boot partiton(s)
   ansible.builtin.include_tasks:
     file: "{{ boot_mode }}.yml"
 
-- name: Create Swap
+- name: Create swap
   when: swap_size_mib > 0
   ansible.builtin.include_tasks:
     file: "swap.yml"
 
-- name: Create Main Partition(s)
+- name: Create main partition(s)
   ansible.builtin.include_tasks:
     file: "{{ filesystem }}.yml"
 
-- name: Mount Partition(s)
+- name: Mount partition(s)
   ansible.builtin.include_tasks:
     file: "mount-{{ filesystem }}.yml"

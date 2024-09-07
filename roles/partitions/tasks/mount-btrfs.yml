@@ -1,5 +1,5 @@
 ---
-- name: Mount Root Subvolume
+- name: Mount root subvolume
   ansible.posix.mount:
     path: "{{ fsroot }}"
     src: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"
@@ -7,7 +7,7 @@
     opts: "{{ btrfs_mount_opts }},subvol=/@"
     state: mounted
 
-- name: Create FS Structure
+- name: Create FS structure
   ansible.builtin.file:
     path: "{{ fsroot }}/{{ item }}"
     state: directory
@@ -17,7 +17,7 @@
     - "home"
     - ".snapshots"
 
-- name: Mount System Boot Partition(s)
+- name: Mount system boot partition(s)
   when: boot_mode == "uefi"
   ansible.posix.mount:
     path: "{{ fsroot }}/efi"
@@ -26,7 +26,7 @@
     opts: defaults
     state: mounted
 
-- name: Mount Other Subvolumes
+- name: Mount other subvolumes
   ansible.posix.mount:
     path: "{{ fsroot }}/{{ item['dir'] }}"
     src: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"

@@ -1,0 +1,31 @@
+- name: Configure arcolinux repos
+  when: arcolinux_repos
+  block:
+    - name: Check if arcolinux repos are present in /etc/pacman.conf
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      ansible.builtin.command:
+        cmd: grep -q arcolinux_repo /etc/pacman.conf
+      register: grep_arcolinux_repos
+
+    - name: Add ArcoLinux repositories to pacman
+      when: grep_arcolinux_repos.rc != 0
+      ansible.builtin.include_tasks:
+        file: arco-repos.yml
+
+- name: Configure chaotic-aur repos
+  when: chaotic_repos
+  block:
+    - name: Check if chaotic-aur repos are present in /etc/pacman.conf
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      ansible.builtin.command:
+        cmd: grep -q chaotic-aur /etc/pacman.conf
+      register: grep_chaotic_repos
+
+    - name: Add ArcoLinux repositories to pacman
+      when: grep_chaotic_repos.rc != 0
+      ansible.builtin.include_tasks:
+        file: chaotic-repos.yml

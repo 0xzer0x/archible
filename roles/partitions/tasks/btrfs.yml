@@ -1,5 +1,5 @@
 ---
-- name: Create Main Partition
+- name: Create main partition
   community.general.parted:
     device: "{{ install_disk }}"
     label: gpt
@@ -8,12 +8,12 @@
     part_start: "{{ ((boot_mode == 'uefi') | ternary(304, 6)) + swap_size_mib }}MiB"
     fs_type: btrfs
 
-- name: Create Btrfs Partition
+- name: Format BTRFS filesystem
   community.general.filesystem:
     dev: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"
     fstype: btrfs
 
-- name: Create btrfs subvolumes
+- name: Create BTRFS subvolumes
   community.general.btrfs_subvolume:
     automount: true
     filesystem_device: "{{ install_disk }}{{ (swap_size_mib > 0) | ternary(3, 2) }}"

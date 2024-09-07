@@ -1,23 +1,23 @@
 ---
-- name: "Add ArcoLinux Keyring and Mirrorlist"
+- name: Add arcolinux keyring and mirrorlist
   loop:
-    - "arcolinux-keyring-20251209-3-any.pkg.tar.zst"
-    - "arcolinux-mirrorlist-git-24.03-12-any.pkg.tar.zst"
+    - arcolinux-keyring-20251209-3-any.pkg.tar.zst
+    - arcolinux-mirrorlist-git-24.03-12-any.pkg.tar.zst
   ansible.builtin.get_url:
     url: "https://github.com/arcolinux/arcolinux_repo/raw/main/x86_64/{{ item }}"
     dest: "/tmp/{{ item }}"
     mode: "0755"
 
-- name: "Install Keyring and Mirrorlist"
+- name: Install keyring and mirrorlist
   loop:
-    - "arcolinux-keyring-20251209-3-any.pkg.tar.zst"
-    - "arcolinux-mirrorlist-git-24.03-12-any.pkg.tar.zst"
+    - arcolinux-keyring-20251209-3-any.pkg.tar.zst
+    - arcolinux-mirrorlist-git-24.03-12-any.pkg.tar.zst
   community.general.pacman:
     name: "/tmp/{{ item }}"
 
-- name: "Add ArcoLinux Repos to /etc/pacman.conf"
+- name: Add arcolinux repos to /etc/pacman.conf
   block:
-    - name: "Append Repos to /etc/pacman.conf"
+    - name: Append repos to /etc/pacman.conf
       ansible.builtin.blockinfile:
         path: /etc/pacman.conf
         marker: ""
@@ -39,7 +39,7 @@
           SigLevel = PackageRequired DatabaseNever
           Include = /etc/pacman.d/arcolinux-mirrorlist
 
-    - name: Update Pacman Database
+    - name: Update pacman database
       community.general.pacman:
         update_cache: true
 

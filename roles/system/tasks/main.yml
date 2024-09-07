@@ -1,5 +1,5 @@
 ---
-- name: Pacstrap Packages
+- name: Pacstrap packages
   ansible.builtin.command:
     cmd: >
       pacstrap -K {{ fsroot }} --needed
@@ -7,7 +7,7 @@
         {{ pkg | quote }}
       {% endfor %}
 
-- name: Install BIOS-Specific Packages
+- name: Install BIOS packages
   when: boot_mode == "bios"
   ansible.builtin.command:
     cmd: >
@@ -15,14 +15,14 @@
       dosfstools
       mtools
 
-- name: Install UEFI-Specific Packages
+- name: Install UEFI packages
   when: boot_mode == "uefi"
   ansible.builtin.command:
     cmd: >
       arch-chroot {{ fsroot }} pacman -Sy --noconfirm --needed
       efibootmgr
 
-- name: Install Btrfs-Specific Packages
+- name: Install BTRFS packages
   when: filesystem == "btrfs"
   ansible.builtin.command:
     cmd: >
