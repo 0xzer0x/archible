@@ -24,7 +24,7 @@
       - gvfs-gphoto2
       - gvfs-mtp
       - gvfs-smb
-      - hyprland-git
+      - hyprland
       - hyprshot
       - swww
       - libportal-gtk3

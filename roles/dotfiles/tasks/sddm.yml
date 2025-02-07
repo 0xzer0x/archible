@@ -1,20 +1,25 @@
 ---
+- name: Install required fonts
+  community.general.pacman:
+    state: present
+    name: ttf-atkinson-hyperlegible
+
 - name: Install SDDM theme
   changed_when: true
   ansible.builtin.command:
-    cmd: "yay --noconfirm --needed --aur -Sy sddm-catppuccin-git"
+    cmd: "yay --noconfirm --needed --aur -Sy sddm-theme-corners-git"
 
 - name: Copy custom theme background
   ansible.builtin.copy:
     src: "world-map.png"
-    dest: "/usr/share/sddm/themes/catppuccin/backgrounds/world-map.png"
+    dest: "/usr/share/sddm/themes/corners/backgrounds/world-map.png"
     mode: "644"
 
 - name: Set custom theme background
   ansible.builtin.lineinfile:
-    path: "/usr/share/sddm/themes/catppuccin/theme.conf"
-    regex: "^Background="
-    line: 'Background="backgrounds/world-map.png"'
+    path: "/usr/share/sddm/themes/corners/theme.conf"
+    regex: "^BgSource="
+    line: 'BgSource="backgrounds/world-map.png"'
 
 - name: Copy SDDM config
   ansible.builtin.copy:
@@ -23,7 +28,7 @@
     mode: "{{ item['mode'] }}"
   loop:
     - src: "sddm.conf"
-      dest: "/etc/sddm.conf"
+      dest: "/etc/sddm.conf.d/default.conf"
       mode: "644"
 
 - name: Ensure SDDM service is enabled

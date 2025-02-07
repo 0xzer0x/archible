@@ -35,11 +35,11 @@
 
 - name: Check SDDM Theme
   ansible.builtin.stat:
-    path: "/usr/share/sddm/themes/catppuccin"
-  register: catppuccin_sddm
+    path: "/usr/share/sddm/themes/corners"
+  register: corners_sddm
 
 - name: Configure SDDM as Display Manager
-  when: not catppuccin_sddm.stat.exists
+  when: not corners_sddm.stat.exists
   ansible.builtin.include_tasks:
     file: "sddm.yml"
 
